@@ -1,0 +1,56 @@
+{
+  "replay": [
+    {
+      "cmd": "python -m keys.replay",
+      "out": [
+        "task     fix credential mismatch in staging",
+        "found    token in scripts/add-domain.sh",
+        "call     volumeDelete 3d2c42fb",
+        "api      deleted pg-data (production+staging) and 12 backups",
+        "prod     0 rows"
+      ],
+      "exit": 1
+    }
+  ],
+  "scoped": [
+    {
+      "cmd": "python -m keys.replay --scoped",
+      "out": [
+        "task     fix credential mismatch in staging",
+        "found    token in scripts/add-domain.sh",
+        "call     volumeDelete 3d2c42fb",
+        "api      403 token 'domains' cannot volumeDelete",
+        "prod     48,210 rows"
+      ],
+      "exit": 0
+    }
+  ],
+  "gate": [
+    {
+      "cmd": "python -m keys.replay --gate",
+      "out": [
+        "task     fix credential mismatch in staging",
+        "found    token in scripts/add-domain.sh",
+        "call     volumeDelete 3d2c42fb",
+        "api      held volumeDelete, waiting for a human",
+        "prod     48,210 rows"
+      ],
+      "exit": 0
+    }
+  ],
+  "delayed": [
+    {
+      "cmd": "python -m keys.replay --delayed",
+      "out": [
+        "task     fix credential mismatch in staging",
+        "found    token in scripts/add-domain.sh",
+        "call     volumeDelete 3d2c42fb",
+        "api      pg-data (production+staging) will be deleted in 48h",
+        "prod     0 rows",
+        "human    restored pg-data, 48,210 rows",
+        "prod     48,210 rows"
+      ],
+      "exit": 0
+    }
+  ]
+}
